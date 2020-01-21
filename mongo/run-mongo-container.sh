@@ -1,0 +1,1 @@
+kubectl exec -it mongodb-standalone-0 --namespace mongodb sh
