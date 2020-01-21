@@ -124,4 +124,4 @@ spec:
       volumes:
         - name: host-volume-rocketmq-broker-master-prod
           hostPath:
-            path: /mnt/data/rocketmq/master
+            path: /mnt/data/rocketmq/broker/master
