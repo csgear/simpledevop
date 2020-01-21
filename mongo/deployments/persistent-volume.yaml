@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-    name: mongodb-standalone
+  name: mongodb-standalone
 spec:
   capacity:
     storage: 2Gi
@@ -11,13 +11,14 @@ spec:
   persistentVolumeReclaimPolicy: Retain
   storageClassName: mongodb-standalone
   local:
-    path: /opt/mongodb
+    path: /mnt/data/mongo
   nodeAffinity:
     required:
       nodeSelectorTerms:
-      - matchExpressions:
-        - key: kubernetes.io/hostname
-          operator: In
-          values:
-            - minikube
+        - matchExpressions:
+            - key: kubernetes.io/hostname
+              operator: In
+              values:
+                - minikube
 ---
+
