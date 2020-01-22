@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: simplenodeapp
+spec:
+  selector:
+    matchLabels:
+      app: simplenodeapp
+  template:
+    metadata:
+      labels:
+        app: simplenodeapp
+    spec:
+      containers:
+        - name: simplenodeapp
+          image: csgear/simpleapp:1.0.0
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+          ports:
+            - containerPort: 8080
