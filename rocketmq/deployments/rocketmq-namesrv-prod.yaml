@@ -38,7 +38,6 @@ spec:
       labels:
         app: pod-rocketmq-namesrv-prod
     spec:
-      hostNetwork: true
       containers:
         - image: csgear/rocketmq-namesrv:4.5.1
           securityContext:
