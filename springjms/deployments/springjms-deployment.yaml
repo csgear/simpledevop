@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: springjms
+spec:
+  selector:
+    matchLabels:
+      app: springjms
+  template:
+    metadata:
+      labels:
+        app: springjms
+    spec:
+      containers:
+        - name: springjms
+          image: csgear/springjms:1.0.0
+          imagePullPolicy: IfNotPresent
+          resources:
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+          ports:
+            - containerPort: 8080
