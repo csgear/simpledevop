@@ -13,11 +13,13 @@ kind: PersistentVolumeClaim
 metadata:
   name: mysql-data-disk
 spec:
+  storageClassName: mysql-standalone
   accessModes:
     - ReadWriteOnce
+  volumeMode: Filesystem
   resources:
     requests:
-      storage: 1Gi
+      storage: 512Mi
 ---
 apiVersion: apps/v1
 kind: Deployment
