@@ -126,4 +126,4 @@ spec:
       volumes:
         - name: host-volume-rocketmq-broker-slave-prod
           hostPath:
-            path: /mnt/data/rocketmq/slave
+            path: /mnt/data/rocketmq/broker/slave
