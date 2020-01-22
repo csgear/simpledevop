@@ -1,0 +1,18 @@
+
+#### build project
+
+1) mvn install -Dmaven.test.skip=true  
+2) java -jar target/xxxx.jar 
+
+#### Dockerfile
+
+FROM gcr.io/distroless/java:11
+LABEL maintainer="csgear@live.com"
+EXPOSE 8080
+# mvn install -Dmaven.test.skip=true
+# docker build -t csgear/springjms:1.0.0 .
+ARG JAR_FILE=target/rocketmq-springjms-examples-0.0.1-SNAPSHOT.jar
+ADD ${JAR_FILE} app.jar
+ENTRYPOINT ["java", "-jar","/app.jar"]
+
+
