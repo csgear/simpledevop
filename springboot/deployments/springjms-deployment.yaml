@@ -13,7 +13,7 @@ spec:
     spec:
       containers:
         - name: springjms
-          image: csgear/sprimgjms:1.0.0
+          image: csgear/springjms:1.0.0
           imagePullPolicy: IfNotPresent
           resources:
             limits:
