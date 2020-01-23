@@ -7,9 +7,8 @@ spec:
   selector:
     matchLabels:
       app: zookeeper
-      storage: zookeeper-pzoo
   serviceName: "pzoo"
-  replicas: 1
+  replicas: 2
   updateStrategy:
     type: RollingUpdate
   podManagementPolicy: Parallel
@@ -17,7 +16,6 @@ spec:
     metadata:
       labels:
         app: zookeeper
-        storage: zookeeper-pzoo
       annotations:
         app: pzoo
     spec:
@@ -64,16 +62,16 @@ spec:
               memory: 100Mi
             limits:
               memory: 120Mi
-          readinessProbe:
-            exec:
-              command:
-                - /bin/sh
-                - -c
-                - '[ "imok" = "$(echo ruok | nc -w 1 -q 1 127.0.0.1 2181)" ]'
+          # readinessProbe:
+          #   exec:
+          #     command:
+          #       - /bin/sh
+          #       - -c
+          #       - '[ "imok" = "$(echo ruok | nc -w 1 -q 1 127.0.0.1 2181)" ]'
           volumeMounts:
             - name: config
               mountPath: /etc/kafka
-            - name: zookeeper-standalone
+            - name: zookeeper-pzoo
               mountPath: /var/lib/zookeeper
       volumes:
         - name: configmap
@@ -81,15 +79,6 @@ spec:
             name: zookeeper-config
         - name: config
           emptyDir: {}
-  volumeClaimTemplates:
-    - metadata:
-        name: zookeeper-pzoo
-        namespace: kafka
-      spec:
-        storageClassName: zookeeper-pzoo
-        accessModes:
-          - ReadWriteOnce
-        volumeMode: Filesystem
-        resources:
-          requests:
-            storage: 512Mi
+        - name: zookeeper-pzoo
+          persistentVolumeClaim:
+            claimName: zookeeper-pzoo
