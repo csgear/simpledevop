@@ -83,9 +83,13 @@ spec:
           emptyDir: {}
   volumeClaimTemplates:
     - metadata:
-        name: data
+        name: zookeeper-standalone
+        namespace: kafka
       spec:
-        accessModes: ["ReadWriteOnce"]
+        storageClassName: zookeeper-standalone
+        accessModes:
+          - ReadWriteOnce
+        volumeMode: Filesystem
         resources:
           requests:
-            storage: 1Gi
+            storage: 512Mi

@@ -3,5 +3,6 @@ resources:
 - 20pzoo-service.yml
 - 21zoo-service.yml
 - 30service.yml
+- 40storage.yaml
 - 50pzoo.yml
 - 51zoo.yml
