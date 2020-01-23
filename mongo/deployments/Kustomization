@@ -1,9 +1,9 @@
 resources:
-- namespace.yaml
-- config.yaml
-- secrets.yaml
-- storageclass.yaml
-- persistent-volume.yaml
-- persistent-volume-claim.yaml
-- service.yaml
-- statefulsets.yaml
+- 10namespace.yaml
+- 20config.yaml
+- 30secrets.yaml
+- 40storageclass.yaml
+- 41persistent-volume.yaml
+- 42persistent-volume-claim.yaml
+- 50service.yaml
+- 60statefulsets.yaml
