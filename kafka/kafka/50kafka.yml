@@ -16,8 +16,6 @@ spec:
     metadata:
       labels:
         app: kafka
-      annotations:
-        app: kafka
     spec:
       terminationGracePeriodSeconds: 30
       initContainers:
@@ -89,7 +87,7 @@ spec:
           volumeMounts:
             - name: config
               mountPath: /etc/kafka
-            - name: data
+            - name: kafka-data
               mountPath: /var/lib/kafka/data
             - name: extensions
               mountPath: /opt/kafka/libs/extensions
@@ -101,11 +99,6 @@ spec:
           emptyDir: {}
         - name: extensions
           emptyDir: {}
-  volumeClaimTemplates:
-    - metadata:
-        name: data
-      spec:
-        accessModes: ["ReadWriteOnce"]
-        resources:
-          requests:
-            storage: 10Gi
+        - name: kafka-data
+          persistentVolumeClaim:
+            claimName: kafka-persistence-volumn-claim
