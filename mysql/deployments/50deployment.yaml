@@ -8,27 +8,21 @@ data:
   # echo -n "my-root-secret-password" | base64
   ROOT_PASSWORD: bXktcm9vdC1zZWNyZXQtcGFzc3dvcmQ=
 ---
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: mysql-data-disk
-spec:
-  storageClassName: mysql-standalone
-  accessModes:
-    - ReadWriteOnce
-  volumeMode: Filesystem
-  resources:
-    requests:
-      storage: 512Mi
----
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
-  name: mysql-deployment
+  name: mysql-statefulset
   labels:
     app: mysql
 spec:
+  selector:
+    matchLabels:
+      app: mysql
+  serviceName: "mysql"
   replicas: 1
+  updateStrategy:
+    type: RollingUpdate
+  podManagementPolicy: Parallel
   selector:
     matchLabels:
       app: mysql
@@ -52,6 +46,12 @@ spec:
                 secretKeyRef:
                   name: mysql-secrets
                   key: ROOT_PASSWORD
+          resources:
+            requests:
+              cpu: 100m
+              memory: 500Mi
+            limits:
+              memory: 1Gi
       volumes:
         - name: mysql-data
           persistentVolumeClaim:
