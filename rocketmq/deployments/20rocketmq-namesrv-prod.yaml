@@ -42,7 +42,7 @@ spec:
         - image: csgear/rocketmq-namesrv:4.5.1
           securityContext:
             privileged: true
-          imagePullPolicy: Always
+          imagePullPolicy: IfNotPresent
           name: container-rocketmq-namesrv-prod
           ports:
             - protocol: TCP
