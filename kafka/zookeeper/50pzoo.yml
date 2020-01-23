@@ -7,7 +7,7 @@ spec:
   selector:
     matchLabels:
       app: zookeeper
-      storage: persistent
+      storage: zookeeper-pzoo
   serviceName: "pzoo"
   replicas: 1
   updateStrategy:
@@ -17,7 +17,7 @@ spec:
     metadata:
       labels:
         app: zookeeper
-        storage: persistent
+        storage: zookeeper-pzoo
       annotations:
         app: pzoo
     spec:
@@ -31,7 +31,7 @@ spec:
               mountPath: /etc/kafka-configmap
             - name: config
               mountPath: /etc/kafka
-            - name: data
+            - name: zookeeper-pzoo
               mountPath: /var/lib/zookeeper
       containers:
         - name: zookeeper
@@ -73,7 +73,7 @@ spec:
           volumeMounts:
             - name: config
               mountPath: /etc/kafka
-            - name: data
+            - name: zookeeper-standalone
               mountPath: /var/lib/zookeeper
       volumes:
         - name: configmap
@@ -83,10 +83,10 @@ spec:
           emptyDir: {}
   volumeClaimTemplates:
     - metadata:
-        name: zookeeper-standalone
+        name: zookeeper-pzoo
         namespace: kafka
       spec:
-        storageClassName: zookeeper-standalone
+        storageClassName: zookeeper-pzoo
         accessModes:
           - ReadWriteOnce
         volumeMode: Filesystem
