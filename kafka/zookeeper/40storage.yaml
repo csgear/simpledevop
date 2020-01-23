@@ -13,7 +13,7 @@ metadata:
   name: zookeeper-pzoo
 spec:
   capacity:
-    storage: 3Gi
+    storage: 1Gi
   volumeMode: Filesystem
   accessModes:
     - ReadWriteOnce

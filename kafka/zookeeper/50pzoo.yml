@@ -8,7 +8,7 @@ spec:
     matchLabels:
       app: zookeeper
   serviceName: "pzoo"
-  replicas: 2
+  replicas: 1
   updateStrategy:
     type: RollingUpdate
   podManagementPolicy: Parallel

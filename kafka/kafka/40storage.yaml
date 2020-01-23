@@ -13,7 +13,7 @@ metadata:
   name: kafka-persistence-volumn
 spec:
   capacity:
-    storage: 3Gi
+    storage: 1Gi
   volumeMode: Filesystem
   accessModes:
     - ReadWriteOnce
