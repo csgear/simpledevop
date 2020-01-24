@@ -1,0 +1,6 @@
+resources:
+- 00namespace.yml
+- 40storageclass.yaml
+- 41persistent-volume.yaml
+- 42persistent-volume-claim.yaml
+- deployment.yaml

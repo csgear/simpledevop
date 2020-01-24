@@ -1,0 +1,47 @@
+kind: StorageClass
+apiVersion: storage.k8s.io/v1
+metadata:
+  name: zookeeper-zoo
+  namespace: kafka
+provisioner: kubernetes.io/no-provisioner
+volumeBindingMode: WaitForFirstConsumer
+allowVolumeExpansion: true
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: zookeeper-zoo
+spec:
+  capacity:
+    storage: 1Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: zookeeper-zoo
+  local:
+    path: /mnt/data/zookeeper/bzoo
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: kubernetes.io/hostname
+              operator: In
+              values:
+                - minikube
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: zookeeper-zoo
+  namespace: kafka
+spec:
+  storageClassName: zookeeper-zoo
+  accessModes:
+    - ReadWriteOnce
+  volumeMode: Filesystem
+  resources:
+    requests:
+      storage: 512Mi
+---
+

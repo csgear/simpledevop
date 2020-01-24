@@ -1,0 +1,6 @@
+resources:
+- 10broker-config.yml
+- 20dns.yml
+- 30bootstrap-service.yml
+- 40storage.yaml
+- 50kafka.yml

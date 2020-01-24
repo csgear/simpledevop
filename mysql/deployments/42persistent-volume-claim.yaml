@@ -1,14 +1,13 @@
-kind: PersistentVolumeClaim
+---
 apiVersion: v1
+kind: PersistentVolumeClaim
 metadata:
-  name: mongodb-standalone
-  namespace: mongodb
+  name: mysql-data-disk
 spec:
-  storageClassName: mongodb-standalone
+  storageClassName: mysql-standalone
   accessModes:
     - ReadWriteOnce
   volumeMode: Filesystem
   resources:
     requests:
       storage: 512Mi
----

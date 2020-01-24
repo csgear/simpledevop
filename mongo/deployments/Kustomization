@@ -1,0 +1,7 @@
+resources:
+- 10namespace.yaml
+- 20config.yaml
+- 30secrets.yaml
+- 40storage.yaml
+- 50service.yaml
+- 60statefulsets.yaml

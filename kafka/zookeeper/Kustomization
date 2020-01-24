@@ -1,0 +1,6 @@
+resources:
+- 10zookeeper-config.yml
+- 20pzoo-service.yml
+- 30service.yml
+- 40storage.yaml
+- 50pzoo.yml

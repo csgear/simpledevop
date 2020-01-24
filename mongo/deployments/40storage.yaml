@@ -1,3 +1,11 @@
+kind: StorageClass
+apiVersion: storage.k8s.io/v1
+metadata:
+  name: mongodb-standalone
+provisioner: kubernetes.io/no-provisioner
+volumeBindingMode: WaitForFirstConsumer
+allowVolumeExpansion: true
+---
 apiVersion: v1
 kind: PersistentVolume
 metadata:
@@ -20,5 +28,19 @@ spec:
               operator: In
               values:
                 - minikube
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: mongodb-standalone
+  namespace: mongodb
+spec:
+  storageClassName: mongodb-standalone
+  accessModes:
+    - ReadWriteOnce
+  volumeMode: Filesystem
+  resources:
+    requests:
+      storage: 512Mi
 ---
 

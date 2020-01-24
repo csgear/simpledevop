@@ -1,0 +1,4 @@
+resources:
+- 10namespace.yaml
+- 20rocketmq-namesrv-prod.yaml
+- 30rocketmq-broker-master-prod.yaml
