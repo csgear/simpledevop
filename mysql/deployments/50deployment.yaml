@@ -1,18 +1,9 @@
 ---
-apiVersion: v1
-kind: Secret
-metadata:
-  name: mysql-secrets
-  namespace: mysql
-type: Opaque
-data:
-  # echo -n "my-root-secret-password" | base64
-  ROOT_PASSWORD: bXktcm9vdC1zZWNyZXQtcGFzc3dvcmQ=
----
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: mysql-statefulset
+  namespace: mysql
   labels:
     app: mysql
 spec:
@@ -38,15 +29,27 @@ spec:
           ports:
             - containerPort: 3306
           volumeMounts:
-            - mountPath: "/var/lib/mysql"
+            - name: mysql-data
+              mountPath: "/var/lib/mysql"
               subPath: "mysql"
-              name: mysql-data
+            - name: mysql-initdb
+              mountPath: /docker-entrypoint-initdb.d
           env:
             - name: MYSQL_ROOT_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: mysql-secrets
                   key: ROOT_PASSWORD
+            - name: MYSQL_USER
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secrets
+                  key: MYSQL_USER
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secrets
+                  key: MYSQL_PASSWORD
           resources:
             requests:
               cpu: 100m
@@ -57,16 +60,6 @@ spec:
         - name: mysql-data
           persistentVolumeClaim:
             claimName: mysql-data-disk
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: mysql-service
-  namespace: mysql
-spec:
-  selector:
-    app: mysql
-  ports:
-    - protocol: TCP
-      port: 3306
-      targetPort: 3306
+        - name: mysql-initdb
+          configMap:
+            name: mysql-initdb-config

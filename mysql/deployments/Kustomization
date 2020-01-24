@@ -1,6 +1,9 @@
 resources:
 - 00namespace.yml
+- 10configmap.yaml
+- 20secrets.yaml
+- 30services.yaml
 - 40storageclass.yaml
 - 41persistent-volume.yaml
 - 42persistent-volume-claim.yaml
-- deployment.yaml
+- 50deployment.yaml
