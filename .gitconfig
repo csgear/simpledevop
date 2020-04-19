@@ -1,21 +1,25 @@
 [user]
-	name = Pavan Kumar Sunkara
-	email = pavan.sss1991@gmail.com
-	username = pksunkara
+	name = Xiaojun Yang
+	email = xyang126@ford.com
+
+[credential]
+	helper = store
+
+[sequence]
+	editor = interactive-rebase-tool
+	
 [core]
-	editor = vim
+	editor = nano
 	whitespace = fix,-indent-with-non-tab,trailing-space,cr-at-eol
 	excludesfile = ~/.gitignore
-[sendemail]
-	smtpencryption = tls
-	smtpserver = smtp.gmail.com
-	smtpuser = pavan.sss1991@gmail.com
-	smtppass = password
-	smtpserverport = 587
+
+[http]
+	proxy = http://proxyvipecc.nb.ford.com:83
+[https]
+	proxy = http://proxyvipecc.nb.ford.com:83
+
 [web]
 	browser = google-chrome
-[instaweb]
-	httpd = apache2 -f
 [rerere]
 	enabled = 1
 	autoupdate = 1
