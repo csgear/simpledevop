@@ -8,6 +8,15 @@ data:
   initdb.sql: |
     CREATE DATABASE IF NOT EXISTS people ;
     USE people ;
+    CREATE TABLE IF NOT EXISTS species (id INTEGER PRIMARY KEY, name VARCHAR(255), num_acres DECIMAL));
+    INSERT INTO species VALUES (1, 'African Elephant', 7.5) ;
+    INSERT INTO species VALUES (2, 'Zebra', 1.2) ;
+    CREATE TABLE IF NOT EXISTS animal (id INTEGER PRIMARY KEY, species_id integer, name VARCHAR(255), date_born TIMESTAMP));
+    INSERT INTO animal VALUES (1, 1, 'Elsa', '2001−05−06 02:15') ;
+    INSERT INTO animal VALUES (2, 2, 'Zelda', '2002−08−15 09:12');
+    INSERT INTO animal VALUES (3, 1, 'Ester', '2002−09−09 10:36');
+    INSERT INTO animal VALUES (4, 1, 'Eddie', '2010−06−08 01:24');
+    INSERT INTO animal VALUES (5, 2, 'Zoe', '2005−11−12 03:44') ;
     CREATE TABLE  IF NOT EXISTS friends (id INT, name VARCHAR(256), age INT, gender VARCHAR(3));
     INSERT INTO friends VALUES (1, 'John Smith', 32, 'm');
     INSERT INTO friends VALUES (2, 'Lilian Worksmith', 29, 'f');
