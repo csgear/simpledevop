@@ -365,7 +365,3 @@ _main() {
 if ! _is_sourced; then
 	_main "$@"
 fi
-© 2020 GitHub, Inc.
-Terms
-Privacy
-S
