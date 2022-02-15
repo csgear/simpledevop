@@ -11,6 +11,8 @@ curl -sfL https://get.k3s.io |  sh -
 
 k3s kubectl cluster-info && k3s kubectl get nodes && k3s kubectl get pods --all-namespaces
 
+- echo "export KUBERNETES_MASTER=$( grep server: /etc/rancher/k3s/k3s.yaml | cut -c13-)" >> ~/.bashrc
+- echo "export KUBECONFIG=/etc/rancher/k3s/k3s.yaml" >> ~/.bashrc
 <!-- tail -F /var/log/k3s.log -->
 
 - curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
@@ -56,7 +58,39 @@ kubectl delete -f https://github.com/cert-manager/cert-manager/releases/download
 
 - helm install rancher rancher-latest/rancher \
   --namespace cattle-system \
-  --set hostname=rancher.local
+  --set hostname=rancher.my.org \
+  --set bootstrapPassword=admin
+
+### kafka
+- helm repo add bitnami https://charts.bitnami.com/bitnami
+- helm install kafka-trans bitnami/kafka --namespace kafka-backend
+- helm delete kafka-trans --namespace kafka-backend
+
+Kafka can be accessed by consumers via port 9092 on the following DNS name from within your cluster:
+
+    kafka-trans.kafka-backend.svc.cluster.local
+
+Each Kafka broker can be accessed by producers via port 9092 on the following DNS name(s) from within your cluster:
+
+    kafka-trans-0.kafka-trans-headless.kafka-backend.svc.cluster.local:9092
+
+To create a pod that you can use as a Kafka client run the following commands:
+
+    kubectl run kafka-trans-client --restart='Never' --image docker.io/bitnami/kafka:3.1.0-debian-10-r14 --namespace kafka-backend --command -- sleep infinity
+    kubectl exec --tty -i kafka-trans-client --namespace kafka-backend -- bash
+
+    PRODUCER:
+        kafka-console-producer.sh \
+            --broker-list kafka-trans-0.kafka-trans-headless.kafka-backend.svc.cluster.local:9092 \
+            --topic test
+
+    CONSUMER:
+        kafka-console-consumer.sh \
+            --bootstrap-server kafka-trans.kafka-backend.svc.cluster.local:9092 \
+            --topic test \
+            --from-beginning
+
+
 ### check and start
 - k3s check-config
 - screen -d -m -L -Logfile /var/log/k3s.log /usr/local/bin/k3s server
