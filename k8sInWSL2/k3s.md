@@ -3,16 +3,60 @@
 
 
 // export INSTALL_K3S_VERSION=v1.22.6+k3s1
-// curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION=v1.22.6+k3s1 sh -
 
-- wget https://github.com/k3s-io/k3s/releases/download/v1.23.3%2Bk3s1/k3s
-- screen -d -m -L -Logfile /var/log/k3s.log /usr/local/bin/k3s server
+curl -sfL https://get.k3s.io |  sh -
+
+<!-- - wget https://github.com/k3s-io/k3s/releases/download/v1.23.3%2Bk3s1/k3s
+- screen -d -m -L -Logfile /var/log/k3s.log /usr/local/bin/k3s server -->
 
 k3s kubectl cluster-info && k3s kubectl get nodes && k3s kubectl get pods --all-namespaces
-tail -F /var/log/k3s.log
 
-// - curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
+<!-- tail -F /var/log/k3s.log -->
 
+- curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
+
+- helm repo add rancher-latest https://releases.rancher.com/server-charts/latest
+- helm repo add jetstack https://charts.jetstack.io
+- helm repo update
+
+
+
+#### install / uninstall cert-manager
+- k3s kubectl create namespace cert-manager
+- kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.7.1/cert-manager.yaml
+
+<!-- - helm install \
+  cert-manager jetstack/cert-manager \
+  --namespace cert-manager \
+  --version v1.7.1  -->
+
+helm install \
+  cert-manager jetstack/cert-manager \
+  --namespace cert-manager \
+  --create-namespace \
+  --version v1.7.1 \
+  --set installCRDs=true
+
+### uninstall
+kubectl get Issuers,ClusterIssuers,Certificates,CertificateRequests,Orders,Challenges --all-namespaces
+
+helm --namespace cert-manager delete cert-manager
+
+kubectl delete -f https://github.com/cert-manager/cert-manager/releases/download/v1.7.1/cert-manager.yaml
+
+<!-- - helm install \
+  cert-manager jetstack/cert-manager \
+  --namespace cert-manager -->
+
+- k3s kubectl get pods --namespace cert-manager
+
+### install rancher
+
+- k3s kubectl create namespace cattle-system
+
+- helm install rancher rancher-latest/rancher \
+  --namespace cattle-system \
+  --set hostname=rancher.local
 ### check and start
 - k3s check-config
 - screen -d -m -L -Logfile /var/log/k3s.log /usr/local/bin/k3s server
